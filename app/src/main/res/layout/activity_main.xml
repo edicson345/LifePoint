@@ -10,4 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ed.lifepoint.MainActivity">
 
+    <android.support.v7.widget.ButtonBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Scan QR Code"
+        android:onClick="onClick">
+    </android.support.v7.widget.ButtonBarLayout>
+
 </RelativeLayout>
