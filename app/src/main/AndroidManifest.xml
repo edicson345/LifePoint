@@ -3,7 +3,14 @@
     package="com.example.ed.lifepoint">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <application
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application>
+        <service android:name="org.eclipse.paho.android.service.MqttService" >
+        </service>
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

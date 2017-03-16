@@ -65,6 +65,7 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
 

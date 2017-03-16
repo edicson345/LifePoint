@@ -26,5 +26,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
+    compile('org.eclipse.paho:org.eclipse.paho.android.service:1.0.2'){
+        exclude module: 'support-v4'
+    }
     testCompile 'junit:junit:4.12'
 }

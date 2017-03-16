@@ -11,7 +11,7 @@
     tools:context="com.example.ed.lifepoint.MainActivity">
 
     <TextView
-        android:text="Heart Rate: "
+        android:text="Battery:"
         android:textSize="20dp"
         android:layout_marginTop="68dp"
         android:layout_centerHorizontal="true"
@@ -20,12 +20,19 @@
 
     <TextView
         android:id="@+id/textview2"
-        android:text="bpm"
+        android:text="%"
         android:textSize="20dp"
         android:layout_marginTop="68dp"
         android:layout_marginLeft="238dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Update"
+        android:id="@+id/button2"/>
 
     <Button
         android:id="@+id/button1"
