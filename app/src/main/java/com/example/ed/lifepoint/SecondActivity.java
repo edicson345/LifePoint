@@ -24,9 +24,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class SecondActivity extends Activity implements View.OnClickListener
 {
     MqttAndroidClient client;
+    MqttAndroidClient BPMclient;
     MqttConnectOptions options;
     TextView subText;
     Vibrator vibrator;
+    TextView BPM;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,10 +39,15 @@ public class SecondActivity extends Activity implements View.OnClickListener
         Button two = (Button)findViewById(R.id.button2);
         two.setOnClickListener(this);
         subText = (TextView)findViewById(R.id.textview2);
+        BPM = (TextView)findViewById(R.id.textview3);
         vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         String clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(this.getApplicationContext(), "tcp://io.adafruit.com:1883", clientId);
+
+        String clientId2 = MqttClient.generateClientId();
+        BPMclient = new MqttAndroidClient(this.getApplicationContext(), "tcp://io.adafruit.com:1883", clientId2);
+
         options = new MqttConnectOptions();
         options.setUserName("edicson345");
         options.setPassword("3c70ebad6acb4a5aa68974d00149f7f3".toCharArray());
@@ -70,6 +77,26 @@ public class SecondActivity extends Activity implements View.OnClickListener
             e.printStackTrace();
         }
 
+        try
+        {
+            IMqttToken BPMtoken = BPMclient.connect(options);
+            BPMtoken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken iMqttToken) {
+                    setBPMSub();
+                }
+
+                @Override
+                public void onFailure(IMqttToken iMqttToken, Throwable throwable) {
+
+                }
+            });
+        }
+        catch(MqttException e)
+        {
+            e.printStackTrace();
+        }
+
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
@@ -79,6 +106,24 @@ public class SecondActivity extends Activity implements View.OnClickListener
             @Override
             public void messageArrived(String s, MqttMessage message) throws Exception {
                 subText.setText(new String(message.getPayload()));
+                vibrator.vibrate(500);
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
+            }
+        });
+
+        BPMclient.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable throwable) {
+
+            }
+
+            @Override
+            public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+                BPM.setText(new String(mqttMessage.getPayload()));
                 vibrator.vibrate(500);
             }
 
@@ -116,5 +161,16 @@ public class SecondActivity extends Activity implements View.OnClickListener
         }
     }
 
-
+    private void setBPMSub()
+    {
+        String topic = "edicson345/feeds/heartbeat";
+        try
+        {
+            BPMclient.subscribe(topic, 0);
+        }
+        catch(MqttException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
