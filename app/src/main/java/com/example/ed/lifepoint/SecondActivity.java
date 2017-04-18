@@ -197,6 +197,9 @@ public class SecondActivity extends Activity implements View.OnClickListener
             case R.id.button1:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                unSub();
+                BPMunSub();
+                unSubFall();
                 finish();
                 break;
 
@@ -236,6 +239,48 @@ public class SecondActivity extends Activity implements View.OnClickListener
         try
         {
             detectionClient.subscribe(topic, 0);
+        }
+        catch(MqttException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void unSub()
+    {
+        String topic = "edicson345/feeds/battery";
+
+        try
+        {
+            client.unsubscribe(topic);
+        }
+        catch(MqttException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void BPMunSub()
+    {
+        String topic = "edicson345/feeds/heartbeat";
+
+        try
+        {
+            BPMclient.unsubscribe(topic);
+        }
+        catch(MqttException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void unSubFall()
+    {
+        String topic = "edicson345/feeds/falldetected";
+
+        try
+        {
+            detectionClient.unsubscribe(topic);
         }
         catch(MqttException e)
         {
